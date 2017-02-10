@@ -23,7 +23,7 @@ public class WineController {
 
     @GetMapping("/new")
     public ModelAndView wineNew(Wine wine) {
-        ModelAndView mv = new ModelAndView("wine/Register-wine");
+        ModelAndView mv = new ModelAndView("wine/register-wine");
         mv.addObject(wine);
         mv.addObject("types", TypeWine.values());
         return mv;
