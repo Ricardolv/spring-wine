@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt"
+	  xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout/layout-default}">
+
+	<body>
+		<section layout:fragment="content">
+
+			<div class="page-header">
+				<div class="container-fluid">
+					<h1>
+						Cadastro de Vinho
+					</h1>
+				</div>
+			</div>
+
+			<div class="container-fluid">
+
+				<form method="POST" th:object="${wine}" th:action="@{/wines/new}" class="form-vertical  js-form-loading" >
+
+					<div class="alert  alert-success" th:if="${!#strings.isEmpty(message)}">
+						<span th:text="${message}"></span>
+					</div>
+
+					<div class="alert  alert-danger  alert-dismissible" role="alert" th:if="${#fields.hasAnyErrors()}">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<th:block th:each=" error : ${#fields.detailedErrors()}">
+							<div>
+								<i class="fa  fa-exclamation-circle"></i>
+								<span th:text="${error.message}"></span>
+							</div>
+						</th:block>
+
+					</div>
+
+					<input type="hidden" th:field="*{code}" />
+
+					<div class="form-group">
+						<label for="nome">Nome</label>
+						<input id="nome" type="text" class="form-control" th:field="*{name}"/>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6  form-group">
+							<label for="type" class="control-label">Tipo</label>
+							<select id="type" class="form-control" th:field="*{type}">
+								<option value="">Selecione o tipo</option>
+								<option th:each="type : ${types}"
+										th:value="${type}" th:text="#{|typeWine.${type}|}">
+								</option>
+							</select>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label for="value">Valor</label>
+								<input id="value" type="text" class="form-control js-moeda" th:field="*{value}" />
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<button class="btn  btn-primary" type="submit">Salvar</button>
+						<a href="pesquisa-vinhos.html" class="btn  btn-default">Cancelar</a>
+						<a href="#" class="btn  btn-link  aw-btn-link-danger" onclick="excluir()">Excluir este produto</a>
+					</div>
+
+				</form>
+			</div>
+		</section>
+
+	</body>
+</html>
